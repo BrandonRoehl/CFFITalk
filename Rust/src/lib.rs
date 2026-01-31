@@ -7,7 +7,7 @@ include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 // MARK: - Get and Set will be implemented together
 impl Field {
-    fn cell<'a>(self: &'a mut Field, x: c_int, y: c_int) -> &'a mut bool {
+    fn cell(self: &mut Field, x: c_int, y: c_int) -> &mut bool {
         let x = x % self.w;
         let y = y % self.h;
         // New index
