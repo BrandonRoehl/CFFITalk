@@ -9,6 +9,11 @@ fn main() {
         // The input header we would like to generate
         // bindings for.
         .header("../link.h")
+        // Block methods
+        .blocklist_item("Set")
+        .blocklist_item("Get")
+        .blocklist_item("Next")
+        .blocklist_item("Step")
         // Tell cargo to invalidate the built crate whenever any of the
         // included header files changed.
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
