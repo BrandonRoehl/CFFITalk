@@ -37,7 +37,7 @@ pub extern "C" fn Next(self_: &mut Field, x: c_int, y: c_int) -> bool {
 	let mut alive = 0;
 	for i in -1..=1 {
 	    for j in -1..=1 {
-			if (j != 0 || i != 0) && *self_.cell(x+i, y+j) {
+			if (j != 0 || i != 0) && Get(self_, x+i, y+j) {
 				alive += 1;
 			}
 		}
@@ -46,7 +46,7 @@ pub extern "C" fn Next(self_: &mut Field, x: c_int, y: c_int) -> bool {
 	//   exactly 3 neighbors: on,
 	//   exactly 2 neighbors: maintain current state,
 	//   otherwise: off.
-	alive == 3 || alive == 2 && *self_.cell(x, y)
+	alive == 3 || alive == 2 && Get(self_, x, y)
 }
 
 // MARK: - Increment the game
