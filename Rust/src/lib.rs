@@ -1,6 +1,7 @@
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
+#![allow(clippy::missing_safety_doc)]
 
 use std::os::raw::c_int;
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
@@ -24,22 +25,24 @@ impl Field {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn Set(self_: &mut Field, x: c_int, y: c_int, b: bool) {
+pub unsafe extern "C" fn Set(self_: &mut Field, x: c_int, y: c_int, b: bool) {
     *self_.cell(x, y) = b
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn Get(self_: &mut Field, x: c_int, y: c_int) -> bool {
+pub unsafe extern "C" fn Get(self_: &mut Field, x: c_int, y: c_int) -> bool {
     *self_.cell(x, y)
 }
 
 // MARK: - Next state of a specific cell
-pub extern "C" fn Next(self_: &mut Field, x: c_int, y: c_int) -> bool {
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn Next(self_: &mut Field, x: c_int, y: c_int) -> bool {
 	// Count the adjacent cells that are alive.
 	let mut alive = 0;
 	for i in -1..=1 {
 	    for j in -1..=1 {
-			if (j != 0 || i != 0) && Get(self_, x+i, y+j) {
+			if (j != 0 || i != 0) && unsafe { Get(self_, x+i, y+j) } {
 				alive += 1;
 			}
 		}
@@ -48,7 +51,7 @@ pub extern "C" fn Next(self_: &mut Field, x: c_int, y: c_int) -> bool {
 	//   exactly 3 neighbors: on,
 	//   exactly 2 neighbors: maintain current state,
 	//   otherwise: off.
-	alive == 3 || alive == 2 && Get(self_, x, y)
+	alive == 3 || alive == 2 && unsafe { Get(self_, x, y) }
 }
 
 // MARK: - Increment the game
