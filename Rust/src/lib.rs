@@ -8,6 +8,8 @@ include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 // MARK: - Get and Set will be implemented together
 impl Field {
     fn cell(self: &mut Field, x: c_int, y: c_int) -> &mut bool {
+        // If the x or y coordinates are outside the field boundaries they are wrapped
+        // toroidally. For instance, an x value of -1 is treated as width-1.
         let x = x % self.w;
         let y = y % self.h;
         // New index
