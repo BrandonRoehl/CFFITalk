@@ -5,7 +5,9 @@
 
 // Field represents a two-dimensional field of cells.
 typedef struct {
-  bool **s;
+  // s is a one-dimensional array of booleans representing the state
+  // this wraps w*h
+  bool *s;
   int32_t w;
   int32_t h;
 } Field;
