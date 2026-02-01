@@ -20,6 +20,6 @@ pub unsafe extern "C" fn Step(self_: &mut Life) {
     }
 
 	// Swap fields a and b.
-    unsafe { ptr::swap(self_.a, self_.b) };
+    unsafe { ptr::swap(self_.a, self_.b); }
 }
 
