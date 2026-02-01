@@ -55,5 +55,4 @@ dkms.conf
 *.dwo
 
 # ignore rust targets
-Rust/target/
-bindings.rs
+target/
