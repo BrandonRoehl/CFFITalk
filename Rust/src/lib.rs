@@ -3,8 +3,8 @@
 #![allow(non_snake_case)]
 #![allow(clippy::missing_safety_doc)]
 
-use std::os::raw::c_int;
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+use std::os::raw::c_int;
 
 // MARK: - Get and Set will be implemented together
 impl Field {
@@ -56,6 +56,7 @@ pub unsafe extern "C" fn Next(self_: &mut Field, x: c_int, y: c_int) -> bool {
 
 // MARK: - Increment the game
 
-// unsafe extern "C" {
-//     pub fn Step(self_: *mut Life, x: ::std::os::raw::c_int, y: ::std::os::raw::c_int);
-// }
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn Step(self_: &mut Life) {
+}
+

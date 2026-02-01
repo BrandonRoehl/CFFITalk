@@ -33,6 +33,6 @@ extern bool Next(Field *self, int x, int y);
 
 // Step advances the game by one instant, recomputing and updating all
 // cells.
-extern void Step(Life *self, int x, int y);
+extern void Step(Life *self);
 
 #endif
