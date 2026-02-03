@@ -5,7 +5,7 @@ bool *cell(Field *self, int x, int y) {
   // toroidally. For instance, an x value of -1 is treated as width-1.
   x %= self->w;
   y %= self->h;
-  return (self->s) + (x + y * self->w);
+  return self->s[x] + y;
 }
 
 bool Get(Field *self, int x, int y) { return *cell(self, x, y); }

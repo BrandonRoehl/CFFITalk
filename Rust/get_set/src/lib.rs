@@ -13,11 +13,9 @@ impl Field {
         // toroidally. For instance, an x value of -1 is treated as width-1.
         let x = x % self.w;
         let y = y % self.h;
-        // New index
-        let i: c_int = x + y * self.w;
         // Keep this from getting out of bounds
         unsafe {
-            let ptr: *mut bool = self.s.add(i as usize);
+            let ptr: *mut bool = (*self.s.add(x as usize)).add(y as usize);
 
             ptr.as_mut().expect("null pointer")
         }
