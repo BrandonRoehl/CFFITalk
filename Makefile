@@ -4,12 +4,11 @@ RUST_LIBS = \
 			Rust/next/target/debug/librust_life_next.a \
 			Rust/step/target/debug/librust_life_step.a
 
-$(RUST_LIBS): Rust/get_set/src/*.rs
+$(RUST_LIBS): Rust/%: Rust/*/src/*.rs
 	@echo "* $*"
 	@echo "^ $^"
-	@echo "% $%"
 	@echo "@D $(@D)"
-	@echo "<D $(<D)"
-	@echo "^D $(^D)"
+	@echo "% $%"
 
-
+.PHONY: rust
+rust: $(RUST_LIBS)
