@@ -1,6 +1,12 @@
-
 .PHONY: all
-all: rust
+all: rust c
+
+.PHONY: c
+c: C/libc_get_set.a C/libc_next.a C/libc_step.a
+
+.SECONDEXPANSION:
+C/libc_%.a: C/$$*.o
+	$(AR) rcs $@ $^
 
 .PHONY: rust
 rust: \
