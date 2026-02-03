@@ -1,5 +1,5 @@
 [package]
-name = "rust-life-get-set"
+name = "rust-life-step"
 version = "0.1.0"
 edition = "2024"
 
