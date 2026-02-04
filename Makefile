@@ -13,9 +13,9 @@ swift:
 	cd Swift; swift build
 
 .PHONY: go
-go: Go/get_set.a Go/next.a Go/step.a
+go: Go/libgo_get_set.a Go/libgo_next.a Go/libgo_step.a
 
-Go/%.a: Go/*/*.go
+Go/libgo_%.a: Go/*/*.go
 	cd go; go build -buildmode=c-archive -o $(@F) ./$*
 
 .PHONY: rust
