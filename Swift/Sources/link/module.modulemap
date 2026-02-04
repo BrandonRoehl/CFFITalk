@@ -1,0 +1,4 @@
+module CLink {
+    header "../../../link.h"
+    export *
+}
