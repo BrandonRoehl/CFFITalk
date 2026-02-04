@@ -1,5 +1,5 @@
 .PHONY: all
-all: rust c go
+all: rust c go swift
 
 .PHONY: c
 c: C/libc_get_set.a C/libc_next.a C/libc_step.a
@@ -7,6 +7,10 @@ c: C/libc_get_set.a C/libc_next.a C/libc_step.a
 .SECONDEXPANSION:
 C/libc_%.a: C/$$*.o
 	$(AR) rcs $@ $^
+
+.PHONY: swift
+swift:
+	cd Swift; swift build
 
 .PHONY: go
 go: Go/get_set.a Go/next.a Go/step.a

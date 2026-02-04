@@ -14,10 +14,10 @@ private func cell(_ f: UnsafeMutablePointer<Field>, x: Int32, y: Int32) -> Unsaf
     return xyptr
 }
 
-public func Get(self f: UnsafeMutablePointer<Field>, x: Int32, y: Int32) -> Bool {
+public func Get(_ f: UnsafeMutablePointer<Field>!, _ x: Int32, _ y: Int32) -> Bool {
     return cell(f, x: x, y: y).pointee
 }
 
-public func Set(self f: UnsafeMutablePointer<Field>, x: Int32, y: Int32, b: Bool) {
+public func Set(_ f: UnsafeMutablePointer<Field>!, _ x: Int32, _ y: Int32, _ b: Bool) {
     return cell(f, x: x, y: y).initialize(to: b)
 }
