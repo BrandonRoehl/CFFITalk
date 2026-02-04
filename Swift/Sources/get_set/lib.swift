@@ -1,4 +1,6 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+import CLink
 
-// import ../../../link.h
+public func Get(self: UnsafePointer<Field>, x: Int, y: Int) -> Bool {
+    // return CLink_get(self, x)
+    return false
+}
