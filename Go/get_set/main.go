@@ -3,18 +3,34 @@
 package main
 
 /*
-#cgo CFLAGS: -I${SRCDIR}/../../link.h
-#cgo LDFLAGS: -linclude
 #include "../../link.h"
 */
 import "C"
 
+import "unsafe"
+
 func main() {}
 
-// Execute must match the header file so this import works
-//
+func cell(self *C.Field, x, y C.int) *C.bool {
+	// If the x or y coordinates are outside the field boundaries they are wrapped
+	// toroidally. For instance, an x value of -1 is treated as width-1.
+	x %= self.w
+	y %= self.h
+	// return unsafe.Add(&unsafe.Add(self.s, x), y)
+
+	size := unsafe.Sizeof(C.bool(false))
+	xptr := *(**C.bool)(unsafe.Add(unsafe.Pointer(self.s), uintptr(x)*size))
+	xyptr := (*C.bool)(unsafe.Add(unsafe.Pointer(xptr), uintptr(y)*size))
+
+	return xyptr
+}
+
 //export Get
-// func Get(self *C.Field, x C.int, y C.int) bool {
-// C.
-// return true
-// }
+func Get(self *C.Field, x, y C.int) C.bool {
+	return *cell(self, x, y)
+}
+
+//export Set
+func Set(self *C.Field, x, y C.int, b C.bool) {
+	*cell(self, x, y) = b
+}

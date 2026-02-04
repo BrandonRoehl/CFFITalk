@@ -56,3 +56,6 @@ dkms.conf
 
 # ignore rust targets
 target/
+
+# ignore go headers
+Go/*.h
