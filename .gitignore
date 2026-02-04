@@ -59,3 +59,6 @@ target/
 
 # ignore go headers
 Go/*.h
+
+# don't ignore modulemaps
+!module.modulemap
