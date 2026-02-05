@@ -8,7 +8,7 @@ use std::os::raw::c_int;
 
 // MARK: - Get and Set will be implemented together
 impl Field {
-    fn cell(self: &mut Field, x: c_int, y: c_int) -> &mut bool {
+    unsafe fn cell(&self, x: c_int, y: c_int) -> *mut bool {
         // If the x or y coordinates are outside the field boundaries they are wrapped
         // toroidally. For instance, an x value of -1 is treated as width-1.
         let x = x % self.w;
@@ -17,19 +17,19 @@ impl Field {
         unsafe {
             let ptr: *mut bool = (*self.s.add(x as usize)).add(y as usize);
 
-            ptr.as_mut().expect("null pointer")
+            ptr
         }
     }
 }
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn Set(self_: &mut Field, x: c_int, y: c_int, b: bool) {
-    *self_.cell(x, y) = b
+    unsafe { *self_.cell(x, y) = b }
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn Get(self_: &mut Field, x: c_int, y: c_int) -> bool {
-    *self_.cell(x, y)
+pub unsafe extern "C" fn Get(self_: *const Field, x: c_int, y: c_int) -> bool {
+    unsafe { *((*self_).cell(x, y)) }
 }
 
 

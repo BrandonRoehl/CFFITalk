@@ -2,6 +2,11 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
+use std::{
+    fmt::{Display, Formatter},
+    thread,
+};
+
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 impl Field {
@@ -37,6 +42,19 @@ impl Drop for Field {
     }
 }
 
+impl Display for Field {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        for y in 0..self.h {
+            for x in 0..self.w {
+                let c = if unsafe { Get(self, x, y) } { '*' } else { ' ' };
+                write!(f, "{}", c)?;
+            }
+            writeln!(f)?;
+        }
+        Ok(())
+    }
+}
+
 impl Life {
     pub fn new(w: i32, h: i32) -> Self {
         let a = Box::into_raw(Box::new(Field::new(w, h)));
@@ -56,12 +74,29 @@ impl Drop for Life {
     }
 }
 
+impl Display for Life {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let a = unsafe { &*self.a };
+        writeln!(f, "{}", a)?;
+        Ok(())
+    }
+}
+
 fn main() {
-    let mut life = Box::new(Life::new(10, 10));
+    let mut life = Box::new(Life::new(40, 15));
     let lptr = life.as_mut();
 
-    for _ in 0..10 {
-        unsafe { Step(lptr) };
+    for _ in 0..50 {
+        unsafe {
+            let x = rand() % lptr.w;
+            let y = rand() % lptr.h;
+            Set(lptr.a, x, y, true);
+        }
     }
-    println!("Hello, world!");
+
+    for _ in 0..300 {
+        unsafe { Step(lptr) };
+        println!("{}", lptr);
+        thread::sleep(std::time::Duration::from_millis(50));
+    }
 }

@@ -26,7 +26,7 @@ extern void Set(Field *self, int x, int y, bool b);
 // Get reports whether the specified cell is alive.
 // If the x or y coordinates are outside the field boundaries they are
 // wrapped toroidally. For instance, an x value of -1 is treated as width-1.
-extern bool Get(Field *self, int x, int y);
+extern bool Get(Field const *self, int x, int y);
 
 // Next returns the state of the specified cell at the next time step.
 extern bool Next(Field *self, int x, int y);
