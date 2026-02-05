@@ -62,3 +62,5 @@ Go/*.h
 
 # don't ignore modulemaps
 !module.modulemap
+
+include/*

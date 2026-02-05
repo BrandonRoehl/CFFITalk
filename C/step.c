@@ -1,6 +1,6 @@
 #include "../link.h"
 
-void Step(Life *self) {
+extern void Step(Life *self) {
   // Update the state of the next field (b) from the current field (a).
   for (int x = 0; x < self->w; x++)
     for (int y = 0; y < self->h; y++)

@@ -8,6 +8,6 @@ bool *cell(Field *self, int x, int y) {
   return self->s[x] + y;
 }
 
-bool Get(Field *self, int x, int y) { return *cell(self, x, y); }
+extern bool Get(Field const *self, int x, int y) { return *cell(self, x, y); }
 
-void Set(Field *self, int x, int y, bool b) { *cell(self, x, y) = b; }
+extern void Set(Field *self, int x, int y, bool b) { *cell(self, x, y) = b; }
