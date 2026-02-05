@@ -9,6 +9,8 @@ fn main() {
         // The input header we would like to generate
         // bindings for.
         .header("../../link.h")
+        // No implicit copy
+        .derive_copy(false)
         // Tell cargo to invalidate the built crate whenever any of the
         // included header files changed.
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))

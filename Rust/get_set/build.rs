@@ -9,6 +9,8 @@ fn main() {
         // The input header we would like to generate
         // bindings for.
         .header("../../link.h")
+        // No implicit copy
+        .derive_copy(false)
         // Block methods
         .blocklist_item("Set")
         .blocklist_item("Get")
