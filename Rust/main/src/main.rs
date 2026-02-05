@@ -36,8 +36,8 @@ impl Drop for Field {
             let yxfield = std::slice::from_raw_parts_mut(xfield[0], (self.w * self.h) as usize);
 
             // Drop both pieces of memory
-            Box::from_raw(yxfield);
-            Box::from_raw(xfield);
+            _ = Box::from_raw(yxfield);
+            _ = Box::from_raw(xfield);
         }
     }
 }
@@ -68,8 +68,8 @@ impl Drop for Life {
     fn drop(&mut self) {
         unsafe {
             // Drop the fields
-            Box::from_raw(self.a);
-            Box::from_raw(self.b);
+            _ = Box::from_raw(self.a);
+            _ = Box::from_raw(self.b);
         }
     }
 }
