@@ -62,6 +62,22 @@ impl Life {
 
         Life { a, b, h, w }
     }
+
+    pub fn randomize(&mut self) {
+        unsafe {
+            srand(
+                time::SystemTime::now()
+                    .duration_since(time::UNIX_EPOCH)
+                    .unwrap()
+                    .as_secs() as u32,
+            );
+            for _ in 0..50 {
+                let x = rand() % self.w;
+                let y = rand() % self.h;
+                Set(self.a, x, y, true);
+            }
+        }
+    }
 }
 
 impl Drop for Life {
@@ -83,20 +99,18 @@ impl Display for Life {
 }
 
 fn main() {
+    println!("Conway's Game of Life");
     let mut life = Box::new(Life::new(40, 15));
     let lptr = life.as_mut();
 
-    for _ in 0..50 {
-        unsafe {
-            let x = rand() % lptr.w;
-            let y = rand() % lptr.h;
-            Set(lptr.a, x, y, true);
-        }
-    }
+    // Generate random starting field
+    lptr.randomize();
 
+    print!("\x1b7");
     for _ in 0..300 {
         unsafe { Step(lptr) };
+        print!("\x1b8");
         println!("{}", lptr);
-        thread::sleep(time::Duration::from_millis(50));
+        thread::sleep(time::Duration::from_millis(1000 / 3));
     }
 }

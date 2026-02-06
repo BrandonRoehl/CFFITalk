@@ -54,16 +54,21 @@ void printLife(Life *l) {
   }
 }
 
-int main(int argc, char *argv[]) {
+void randomizeLife(Life *l) {
+  // Generate random starting field
   srand(time(NULL));
-  Life *l = newLife(WIDTH, HEIGHT);
-
-  printf("Conway's Game of Life\n");
   for (int i = 0; i < 50; i++) {
     int x = rand() % l->w;
     int y = rand() % l->h;
     Set(l->a, x, y, true);
   }
+}
+
+int main(int argc, char *argv[]) {
+  printf("Conway's Game of Life\n");
+  Life *l = newLife(WIDTH, HEIGHT);
+
+  randomizeLife(l);
 
   printf("\0337");
   for (int i = 0; i < 300; i++) {
