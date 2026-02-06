@@ -37,10 +37,6 @@ c: C/libc_get_set.a C/libc_next.a C/libc_step.a
 C/libc_%.a: C/%.o
 	$(AR) rcs $@ $^
 
-C/a.out: C/main.c link_all
-	$(CC) C/main.c -L link -L "$(shell xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx" \
-		-lc_get_set -lc_next -lc_step -o $@
-
 .PHONY: swift
 swift:
 	cd Swift; swift build -c release
