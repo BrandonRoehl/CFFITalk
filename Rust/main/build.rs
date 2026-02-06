@@ -17,9 +17,8 @@ fn main() {
             );
         }
     }
-    // $(CC) C/main.c -L link -L "$(shell xcode-select -p)" \
 
-    for f in ["c_get_set", "c_next", "c_step"] {
+    for f in ["rust_get_set", "rust_next", "rust_step"] {
         println!("cargo:rustc-link-lib=static={}", f);
     }
 
