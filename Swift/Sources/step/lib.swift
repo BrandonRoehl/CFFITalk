@@ -1,5 +1,6 @@
 import CLink
 
+@_cdecl("Step")
 public func Step(_ l: UnsafeMutablePointer<Life>!) {
     // Update the state of the next field (b) from the current field (a).
     for y in 0..<l.pointee.h {

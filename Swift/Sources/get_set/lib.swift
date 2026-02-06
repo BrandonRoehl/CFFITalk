@@ -14,10 +14,12 @@ extension UnsafeMutablePointer where Pointee == Field {
     }
 }
 
+@_cdecl("Get")
 public func Get(_ f: UnsafeMutablePointer<Field>!, _ x: Int32, _ y: Int32) -> Bool {
     return f.cell(x: x, y: y).pointee
 }
 
+@_cdecl("Set")
 public func Set(_ f: UnsafeMutablePointer<Field>!, _ x: Int32, _ y: Int32, _ b: Bool) {
     return f.cell(x: x, y: y).initialize(to: b)
 }

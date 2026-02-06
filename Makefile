@@ -10,7 +10,7 @@ C/libc_%.a: C/$$*.o
 
 .PHONY: swift
 swift:
-	cd Swift; swift build
+	cd Swift; swift build -c release
 
 .PHONY: go
 go: Go/libgo_get_set.a Go/libgo_next.a Go/libgo_step.a

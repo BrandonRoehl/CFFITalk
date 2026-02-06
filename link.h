@@ -28,6 +28,8 @@ extern void Set(Field *self, int x, int y, bool b);
 // wrapped toroidally. For instance, an x value of -1 is treated as width-1.
 extern bool Get(Field const *self, int x, int y);
 
+typedef Field const *ConstFieldPtr;
+
 // Next returns the state of the specified cell at the next time step.
 extern bool Next(Field *self, int x, int y);
 

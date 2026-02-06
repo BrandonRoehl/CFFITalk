@@ -28,7 +28,7 @@ func cell(self *C.Field, x, y C.int) *C.bool {
 }
 
 //export Get
-func Get(self *C.Field, x, y C.int) C.bool {
+func Get(self C.ConstFieldPtr, x, y C.int) C.bool {
 	return *cell(self, x, y)
 }
 
