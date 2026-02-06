@@ -11,7 +11,9 @@ impl Field {
     unsafe fn cell(&self, x: c_int, y: c_int) -> *mut bool {
         // If the x or y coordinates are outside the field boundaries they are wrapped
         // toroidally. For instance, an x value of -1 is treated as width-1.
+        let x = x + self.w;
         let x = x % self.w;
+        let y = y + self.h;
         let y = y % self.h;
         // Keep this from getting out of bounds
         unsafe {

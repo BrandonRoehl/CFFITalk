@@ -4,8 +4,8 @@ extension UnsafeMutablePointer where Pointee == Field {
     func cell(x: Int32, y: Int32) -> UnsafeMutablePointer<Bool> {
         // If the x or y coordinates are outside the field boundaries they are wrapped
         // toroidally. For instance, an x value of -1 is treated as width-1.
-        let x = Int(x % self.pointee.w)
-        let y = Int(y % self.pointee.h)
+        let x = Int((x + self.pointee.w) % self.pointee.w)
+        let y = Int((y + self.pointee.h) % self.pointee.h)
 
         let xptr = self.pointee.s.advanced(by: x).pointee!
         let xyptr = xptr.advanced(by: y)

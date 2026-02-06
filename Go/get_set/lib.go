@@ -14,7 +14,9 @@ func main() {}
 func cell(self *C.Field, x, y C.int) *C.bool {
 	// If the x or y coordinates are outside the field boundaries they are wrapped
 	// toroidally. For instance, an x value of -1 is treated as width-1.
+	x += self.w
 	x %= self.w
+	y += self.h
 	y %= self.h
 	// return unsafe.Add(&unsafe.Add(self.s, x), y)
 
