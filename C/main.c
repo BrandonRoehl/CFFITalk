@@ -1,4 +1,5 @@
 #include "../link.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -39,6 +40,19 @@ void dropLife(Life *l) {
   free(l);
 }
 
+void printLife(Life *l) {
+  for (int y = 0; y < l->h; y++) {
+    for (int x = 0; x < l->w; x++) {
+      if (Get(l->a, x, y)) {
+        putchar('*');
+      } else {
+        putchar(' ');
+      }
+    }
+    putchar('\n');
+  }
+}
+
 int main(int argc, char *argv[]) {
   Life *l = newLife(WIDTH, HEIGHT);
 
@@ -50,6 +64,7 @@ int main(int argc, char *argv[]) {
 
   for (int i = 0; i < 300; i++) {
     Step(l);
+    printLife(l);
     usleep(50);
   }
   dropLife(l);
