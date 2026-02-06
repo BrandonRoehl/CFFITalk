@@ -1,6 +1,7 @@
 #include "../link.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 
 #define WIDTH 40
@@ -9,7 +10,7 @@
 Field *newField(int w, int h) {
   bool *xyfield = malloc(w * h * sizeof(bool));
   bool **xfield = malloc(w * sizeof(bool *));
-  for (int x = 0; x < w; w++) {
+  for (int x = 0; x < w; x++) {
     xfield[x] = xyfield + (x * h);
   }
   Field *f = malloc(sizeof(Field));
@@ -54,18 +55,22 @@ void printLife(Life *l) {
 }
 
 int main(int argc, char *argv[]) {
+  srand(time(NULL));
   Life *l = newLife(WIDTH, HEIGHT);
 
+  printf("Conway's Game of Life\n");
   for (int i = 0; i < 50; i++) {
     int x = rand() % l->w;
     int y = rand() % l->h;
     Set(l->a, x, y, true);
   }
 
+  printf("\0337");
   for (int i = 0; i < 300; i++) {
     Step(l);
+    printf("\0338");
     printLife(l);
-    usleep(50);
+    usleep(1000000 / 3);
   }
   dropLife(l);
 }
