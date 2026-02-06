@@ -1,12 +1,44 @@
+.PHONY: link_all
+link_all: \
+	link/libc_get_set.a \
+	link/libc_next.a \
+	link/libc_step.a \
+	link/librust_get_set.a \
+	link/librust_next.a \
+	link/librust_step.a \
+	link/libgo_get_set.a \
+	link/libgo_next.a \
+	link/libgo_step.a \
+	link_swift
+
+.PHONY:
+link_swift: swift link
+	find "$(PWD)/Swift/.build/release/" -type f -name "libswift_*.a" -exec ln -sf {} link/ \;
+
+.SECONDEXPANSION:
+link/librust_%.a: Rust/$$*/target/release/librust_life_$$*.a link
+	ln -sf $(PWD)/$< $@
+
+link/libc_%.a: C/libc_%.a link
+	ln -sf $(PWD)/$< $@
+
+link/libgo_%.a: Go/libgo_%.a link
+	ln -sf $(PWD)/$< $@
+
+link:
+	mkdir -p $@
+
 .PHONY: all
 all: rust c go swift
 
 .PHONY: c
 c: C/libc_get_set.a C/libc_next.a C/libc_step.a
 
-.SECONDEXPANSION:
-C/libc_%.a: C/$$*.o
+C/libc_%.a: C/%.o
 	$(AR) rcs $@ $^
+
+C/a.out: C/main.c link_all
+	$(CC) C/main.c -L link -lc_get_set -lc_next -lc_step -o $@
 
 .PHONY: swift
 swift:
@@ -15,7 +47,8 @@ swift:
 .PHONY: go
 go: Go/libgo_get_set.a Go/libgo_next.a Go/libgo_step.a
 
-Go/libgo_%.a: Go/*/*.go
+.SECONDEXPANSION:
+Go/libgo_%.a: Go/$$*/*.go
 	cd go; go build -buildmode=c-archive -o $(@F) ./$*
 
 .PHONY: rust
