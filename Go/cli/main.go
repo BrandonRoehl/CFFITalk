@@ -3,7 +3,7 @@
 package main
 
 /*
-#cgo CFLAGS: -I${SRCDIR}/../../include/
+#cgo LDFLAGS: -L ../../link/
 #cgo LDFLAGS: -l c_get_set -l c_next -l c_step
 #include "../../link.h"
 */
