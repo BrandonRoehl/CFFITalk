@@ -17,7 +17,7 @@ func newField(w, h int) Field {
 		xyfield: make([]C.bool, w*h),
 		xfield:  make([]*C.bool, w),
 
-		Field: C.Field{
+		inner: C.Field{
 			w: C.int(w),
 			h: C.int(h),
 		},
@@ -32,11 +32,11 @@ func newField(w, h int) Field {
 type Field struct {
 	xyfield []C.bool
 	xfield  []*C.bool
-	C.Field
+	inner   C.Field
 }
 
 func main() {
 	f := newField(10, 10)
 
-	_ = &f.Field
+	_ = &f.inner
 }
