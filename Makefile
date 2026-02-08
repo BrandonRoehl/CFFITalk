@@ -14,6 +14,8 @@ link_all: \
 .PHONY:
 link_swift: swift link
 	find "$(PWD)/Swift/.build/release/" -type f -name "libswift_*.a" -exec ln -sf {} link/ \;
+	find "$(shell xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx" -type f -name "*.a" -exec ln -sf {} link/ \;
+
 
 .SECONDEXPANSION:
 link/librust_%.a: Rust/$$*/target/release/librust_life_$$*.a link

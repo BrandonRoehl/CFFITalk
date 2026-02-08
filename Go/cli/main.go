@@ -4,7 +4,7 @@ package main
 
 /*
 #cgo LDFLAGS: -L ../../link/
-#cgo LDFLAGS: -l c_get_set -l c_next -l c_step
+#cgo LDFLAGS: -l go_get_set -l go_next -l go_step
 #include "../../link.h"
 */
 import "C"
@@ -107,6 +107,7 @@ func (l *Life) Drop() {
 }
 
 func main() {
+	fmt.Println("Conway's Game of Life")
 	l := NewLife(40, 15)
 	defer l.Drop()
 

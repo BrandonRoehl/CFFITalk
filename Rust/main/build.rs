@@ -1,6 +1,5 @@
 use std::env;
 use std::path::PathBuf;
-use std::process::Command;
 
 fn main() {
     // Tell Cargo where to find the library file (e.g., in the current directory)
@@ -8,15 +7,15 @@ fn main() {
     println!("cargo:rustc-link-search=../../link/");
 
     // Link Xcode if its found
-    if let Ok(output) = Command::new("xcode-select").arg("-p").output() {
-        if output.status.success() {
-            let xcode_path = String::from_utf8_lossy(&output.stdout);
-            println!(
-                "cargo:rustc-link-search={}/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx",
-                xcode_path
-            );
-        }
-    }
+    // if let Ok(output) = Command::new("xcode-select").arg("-p").output() {
+    //     if output.status.success() {
+    //         let xcode_path = String::from_utf8_lossy(&output.stdout);
+    //         println!(
+    //             "cargo:rustc-link-search={}/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx",
+    //             xcode_path
+    //         );
+    //     }
+    // }
 
     for f in ["rust_get_set", "rust_next", "rust_step"] {
         println!("cargo:rustc-link-lib=static={}", f);
