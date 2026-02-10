@@ -1,0 +1,7 @@
+module CLink {
+    header "../../../../link.h"
+    link "c_get_set"
+    link "c_next"
+    link "c_step"
+    export *
+}
