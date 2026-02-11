@@ -4,9 +4,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#define WIDTH 40
-#define HEIGHT 15
-
 Field *newField(int w, int h) {
   bool *xyfield = malloc(w * h * sizeof(bool));
   bool **xfield = malloc(w * sizeof(bool *));
@@ -66,7 +63,7 @@ void randomizeLife(Life *l) {
 
 int main(int argc, char *argv[]) {
   printf("Conway's Game of Life\n");
-  Life *l = newLife(WIDTH, HEIGHT);
+  Life *l = newLife(40, 15);
 
   randomizeLife(l);
 
