@@ -1,7 +1,7 @@
 #include "../link.h"
 #include <stdio.h>
 
-bool *cell(Field const *self, int x, int y) {
+bool *cell(const Field *self, int x, int y) {
   // If the x or y coordinates are outside the field boundaries they are wrapped
   // toroidally. For instance, an x value of -1 is treated as width-1.
   x += self->w;
@@ -11,6 +11,8 @@ bool *cell(Field const *self, int x, int y) {
   return self->s[x] + y;
 }
 
-extern bool Get(Field const *self, int x, int y) { return *cell(self, x, y); }
+extern bool Get(const Field *self, int x, int y) { return *cell(self, x, y); }
 
-extern void Set(Field *self, int x, int y, bool b) { *cell(self, x, y) = b; }
+extern void Set(const Field *self, int x, int y, bool b) {
+  *cell(self, x, y) = b;
+}
