@@ -35,6 +35,7 @@ extern bool Next(const Field *self, int x, int y);
 // cells.
 extern void Step(Life *self);
 
+// These are here for Go's cgo to be able to conform to the extern methods.
 typedef const Field ConstField;
 typedef const Life ConstLife;
 
