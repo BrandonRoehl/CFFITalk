@@ -5,25 +5,22 @@
 
 use std::{
     fmt::{self, Display, Formatter},
-    mem, ptr, slice, thread, time,
+    ptr, slice, thread, time,
 };
 
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 impl Field {
     pub fn new(w: i32, h: i32) -> Self {
-        let mut xyfield: Box<[bool]> = vec![false; (w * h) as usize].into_boxed_slice();
-
+        let xyfield: Box<[bool]> = vec![false; (w * h) as usize].into_boxed_slice();
         let mut xfield: Box<[*mut bool]> = vec![ptr::null_mut(); w as usize].into_boxed_slice();
 
-        let xyfirst = xyfield.as_mut_ptr();
+        let xyfirst = Box::leak(xyfield).as_mut_ptr();
         for x in 0..w as usize {
             xfield[x] = unsafe { xyfirst.add(x * h as usize) };
         }
 
-        let s = xfield.as_mut_ptr();
-        mem::forget(xyfield);
-        mem::forget(xfield);
+        let s = Box::leak(xfield).as_mut_ptr();
 
         Field { w, h, s }
     }
@@ -100,17 +97,16 @@ impl Display for Life {
 
 fn main() {
     println!("Conway's Game of Life");
-    let mut life = Box::new(Life::new(40, 15));
-    let lptr = life.as_mut();
+    let life = &mut Life::new(40, 15);
 
     // Generate random starting field
-    lptr.randomize();
+    life.randomize();
 
     print!("\x1b7");
     for _ in 0..300 {
-        unsafe { Step(lptr) };
+        unsafe { Step(life) };
         print!("\x1b8");
-        println!("{}", lptr);
+        println!("{}", life);
         thread::sleep(time::Duration::from_millis(1000 / 3));
     }
 }
