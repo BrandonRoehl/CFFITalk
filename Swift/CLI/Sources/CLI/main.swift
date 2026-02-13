@@ -1,19 +1,24 @@
 import CLink
 
-protocol LifeStructure {
+public protocol LifeStructure {
     init(w: Int32, h: Int32)
     func free()
+    mutating func randomize()
 }
 
 extension UnsafeMutablePointer where Pointee: LifeStructure {
-    init(w: Int32, h: Int32) {
+    public init(w: Int32, h: Int32) {
         self = .allocate(capacity: 1)
         self.initialize(to: Pointee(w: w, h: h))
     }
 
-    func free() {
+    public func free() {
         self.pointee.free()
         self.deallocate()
+    }
+
+    public func randomize() {
+        self.pointee.randomize()
     }
 }
 
@@ -32,31 +37,39 @@ extension Field: LifeStructure {
         s[0]!.deallocate()
         s.deallocate()
     }
-}
 
-extension Life: LifeStructure {
-    init(w: Int32, h: Int32) {
-        self.init(a: .init(w: w, h: h), b: .init(w: w, h: h), w: w, h: h)
-    }
-
-    func free() {
-        a.free()
-        b.free()
-    }
-}
-
-extension UnsafeMutablePointer: @retroactive CustomStringConvertible where Pointee == Field {
-    func randomize() {
+    public mutating func randomize() {
         for _ in 0..<50 {
             Set(
-                self,
-                Int32.random(in: 0..<self.pointee.w),
-                Int32.random(in: 0..<self.pointee.h),
+                &self,
+                Int32.random(in: 0..<self.w),
+                Int32.random(in: 0..<self.h),
                 true,
             )
         }
     }
+}
 
+extension Life: LifeStructure, @retroactive CustomStringConvertible {
+    public init(w: Int32, h: Int32) {
+        self.init(a: .init(w: w, h: h), b: .init(w: w, h: h), w: w, h: h)
+    }
+
+    public func free() {
+        a.free()
+        b.free()
+    }
+
+    public func randomize() {
+        self.a.randomize()
+    }
+
+    public var description: String {
+        self.a.description
+    }
+}
+
+extension UnsafeMutablePointer: @retroactive CustomStringConvertible where Pointee == Field {
     public var description: String {
         var result = ""
         for y in 0..<self.pointee.h {
@@ -69,16 +82,10 @@ extension UnsafeMutablePointer: @retroactive CustomStringConvertible where Point
     }
 }
 
-extension UnsafeMutablePointer where Pointee == Life {
-    func randomize() {
-        self.pointee.a.randomize()
-    }
-}
-
 // Start the game
 print("Conway's Game of Life")
 
-let l = UnsafeMutablePointer<Life>(w: 40, h: 15)
+var l = Life(w: 40, h: 15)
 defer { l.free() }
 
 l.randomize()
@@ -86,8 +93,8 @@ l.randomize()
 print("\u{001B}7", terminator: "")
 
 for _ in 0..<300 {
-    Step(l)
+    Step(&l)
     print("\u{001B}8", terminator: "")
-    print(l.pointee.a!)
+    print(l)
     usleep(1_000_000 / 3)
 }
