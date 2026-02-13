@@ -1,6 +1,6 @@
 #include "../link.h"
 
-extern bool Next(Field *self, int x, int y) {
+extern bool Next(const Field *self, int x, int y) {
   // Count the adjacent cells that are alive.
   int alive = 0;
   for (int i = -1; i <= 1; i++)
