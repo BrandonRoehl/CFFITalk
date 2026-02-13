@@ -1,6 +1,6 @@
 import CLink
 
-extension UnsafeMutablePointer where Pointee == Field {
+extension UnsafePointer where Pointee == Field {
     func cell(x: Int32, y: Int32) -> UnsafeMutablePointer<Bool> {
         // If the x or y coordinates are outside the field boundaries they are wrapped
         // toroidally. For instance, an x value of -1 is treated as width-1.
@@ -15,11 +15,11 @@ extension UnsafeMutablePointer where Pointee == Field {
 }
 
 @_cdecl("Get")
-public func Get(_ f: UnsafeMutablePointer<Field>!, _ x: Int32, _ y: Int32) -> Bool {
+public func Get(_ f: UnsafePointer<Field>!, _ x: Int32, _ y: Int32) -> Bool {
     return f.cell(x: x, y: y).pointee
 }
 
 @_cdecl("Set")
 public func Set(_ f: UnsafeMutablePointer<Field>!, _ x: Int32, _ y: Int32, _ b: Bool) {
-    return f.cell(x: x, y: y).initialize(to: b)
+    UnsafePointer(f).cell(x: x, y: y).initialize(to: b)
 }
