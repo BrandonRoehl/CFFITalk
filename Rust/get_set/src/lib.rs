@@ -31,7 +31,5 @@ pub unsafe extern "C" fn Set(self_: &Field, x: c_int, y: c_int, b: bool) {
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn Get(self_: &Field, x: c_int, y: c_int) -> bool {
-    unsafe { *((*self_).cell(x, y)) }
+    unsafe { *self_.cell(x, y) }
 }
-
-
