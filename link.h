@@ -21,20 +21,21 @@ typedef struct {
 } Life;
 
 // Set sets the state of the specified cell to the given value.
-extern void Set(Field *self, int x, int y, bool b);
+extern void Set(Field const *self, int x, int y, bool b);
 
 // Get reports whether the specified cell is alive.
 // If the x or y coordinates are outside the field boundaries they are
 // wrapped toroidally. For instance, an x value of -1 is treated as width-1.
 extern bool Get(Field const *self, int x, int y);
 
-typedef Field const *ConstFieldPtr;
-
 // Next returns the state of the specified cell at the next time step.
-extern bool Next(Field *self, int x, int y);
+extern bool Next(Field const *self, int x, int y);
 
-// Step advances the game by one instant, recomputing and updating all
+// Step advances the game by one instant, recomputing, and updating all
 // cells.
 extern void Step(Life *self);
+
+typedef Field const *ConstFieldPtr;
+typedef Life const *ConstLifePtr;
 
 #endif

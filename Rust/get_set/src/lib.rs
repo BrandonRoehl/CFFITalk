@@ -25,12 +25,12 @@ impl Field {
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn Set(self_: &mut Field, x: c_int, y: c_int, b: bool) {
+pub unsafe extern "C" fn Set(self_: &Field, x: c_int, y: c_int, b: bool) {
     unsafe { *self_.cell(x, y) = b }
 }
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn Get(self_: *const Field, x: c_int, y: c_int) -> bool {
+pub unsafe extern "C" fn Get(self_: &Field, x: c_int, y: c_int) -> bool {
     unsafe { *((*self_).cell(x, y)) }
 }
 

@@ -7,7 +7,7 @@ include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 use std::os::raw::c_int;
 
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn Next(self_: &mut Field, x: c_int, y: c_int) -> bool {
+pub unsafe extern "C" fn Next(self_: &Field, x: c_int, y: c_int) -> bool {
 	// Count the adjacent cells that are alive.
 	let mut alive = 0;
 	for i in -1..=1 {

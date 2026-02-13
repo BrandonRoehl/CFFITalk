@@ -11,7 +11,7 @@ import "unsafe"
 
 func main() {}
 
-func cell(self *C.Field, x, y C.int) *C.bool {
+func cell(self C.ConstFieldPtr, x, y C.int) *C.bool {
 	// If the x or y coordinates are outside the field boundaries they are wrapped
 	// toroidally. For instance, an x value of -1 is treated as width-1.
 	x += self.w
@@ -33,6 +33,6 @@ func Get(self C.ConstFieldPtr, x, y C.int) C.bool {
 }
 
 //export Set
-func Set(self *C.Field, x, y C.int, b C.bool) {
+func Set(self C.ConstFieldPtr, x, y C.int, b C.bool) {
 	*cell(self, x, y) = b
 }

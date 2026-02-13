@@ -1,7 +1,7 @@
 import CLink
 
 @_cdecl("Next")
-public func Next(_ f: UnsafeMutablePointer<Field>!, _ x: Int32, _ y: Int32) -> Bool {
+public func Next(_ f: UnsafePointer<Field>!, _ x: Int32, _ y: Int32) -> Bool {
     // Count the adjacent cells that are alive.
     var alive = 0
     for i: Int32 in -1...1 {

@@ -20,6 +20,6 @@ public func Get(_ f: UnsafePointer<Field>!, _ x: Int32, _ y: Int32) -> Bool {
 }
 
 @_cdecl("Set")
-public func Set(_ f: UnsafeMutablePointer<Field>!, _ x: Int32, _ y: Int32, _ b: Bool) {
-    UnsafePointer(f).cell(x: x, y: y).initialize(to: b)
+public func Set(_ f: UnsafePointer<Field>!, _ x: Int32, _ y: Int32, _ b: Bool) {
+    f.cell(x: x, y: y).initialize(to: b)
 }
