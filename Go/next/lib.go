@@ -10,7 +10,7 @@ import "C"
 func main() {}
 
 //export Next
-func Next(self C.ConstFieldPtr, x, y C.int) C.bool {
+func Next(self *C.ConstField, x, y C.int) C.bool {
 	// Count the adjacent cells that are alive.
 	alive := 0
 	for i := C.int(-1); i <= 1; i++ {

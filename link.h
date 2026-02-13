@@ -35,7 +35,7 @@ extern bool Next(const Field *self, int x, int y);
 // cells.
 extern void Step(Life *self);
 
-typedef Field const *ConstFieldPtr;
-typedef Life const *ConstLifePtr;
+typedef const Field ConstField;
+typedef const Life ConstLife;
 
 #endif

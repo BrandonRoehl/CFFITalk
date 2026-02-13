@@ -4,7 +4,7 @@ package main
 
 /*
 #cgo LDFLAGS: -L ../../link/
-#cgo LDFLAGS: -l go_get_set -l go_next -l go_step
+#cgo LDFLAGS: -l c_get_set -l c_next -l c_step
 #include "../../link.h"
 */
 import "C"
